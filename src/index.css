@@ -1,0 +1,321 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-display: "Space Grotesk", sans-serif;
+
+  --color-bg-dark: #030712;
+  --color-surface-dark: #111827;
+  --color-card-dark: #1f2937;
+  --color-primary-blue: #3b82f6;
+  --color-secondary-cyan: #06b6d4;
+  --color-accent-violet: #8b5cf6;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--color-bg-dark);
+    color: #f3f4f6;
+  }
+
+  body {
+    overflow-x: hidden;
+    font-family: var(--font-sans);
+  }
+
+  /* Custom subtle scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #030712;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #1f2937;
+    border-radius: 4px;
+    border: 2px solid #030712;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #374151;
+  }
+}
+
+/* Custom background patterns */
+.grid-bg {
+  background-size: 40px 40px;
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+}
+
+.light .grid-bg {
+  background-image: linear-gradient(to right, rgba(15, 23, 42, 0.03) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(15, 23, 42, 0.03) 1px, transparent 1px) !important;
+}
+
+.glow-circle {
+  filter: blur(120px);
+  opacity: 0.15;
+  mix-blend-mode: screen;
+}
+
+/* Glassmorphism effects */
+.glass-panel {
+  background: rgba(17, 24, 39, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glass-card {
+  background: rgba(31, 41, 55, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* Gradient border glowing */
+.gradient-border-glow {
+  position: relative;
+}
+
+.gradient-border-glow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(to right, #3b82f6, #06b6d4, #8b5cf6);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.4;
+  transition: opacity 0.3s ease;
+}
+
+.gradient-border-glow:hover::before {
+  opacity: 1;
+}
+
+/* Shine overlay effect */
+.shine-overlay {
+  position: relative;
+  overflow: hidden;
+}
+
+.shine-overlay::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0) 60%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(30deg);
+  transition: transform 0.8s ease;
+  pointer-events: none;
+}
+
+.shine-overlay:hover::after {
+  transform: rotate(30deg) translate(20%, 20%);
+}
+
+/* Custom noise overlay */
+.noise-bg {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.015'/%3E%3C/svg%3E");
+}
+
+/* Light Theme Mode Overrides */
+.light {
+  --color-bg-dark: #f8fafc !important;
+  --color-surface-dark: #ffffff !important;
+  --color-card-dark: #ffffff !important;
+}
+
+.light html,
+.light body,
+.light main,
+.light section,
+.light footer,
+.light #root {
+  background-color: #f8fafc !important;
+  background-image: none !important; /* remove dark starry textures */
+  color: #1e293b !important;
+}
+
+/* Base text readability in light mode */
+.light p,
+.light span:not(.bg-clip-text),
+.light label,
+.light li,
+.light small {
+  color: #334155 !important; /* slate-700 */
+}
+
+.light h1,
+.light h2,
+.light h3,
+.light h4,
+.light h5,
+.light h6 {
+  color: #0f172a !important; /* slate-900 */
+}
+
+/* Solid visible bottom header line & polished light header */
+.light header {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  border-bottom: 1.5px solid #cbd5e1 !important; /* Header line is clear & visible */
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05) !important;
+}
+
+.light header a,
+.light header button {
+  color: #475569 !important; /* slate-600 */
+  border-color: #e2e8f0 !important;
+}
+
+.light header a:hover,
+.light header button:hover {
+  color: #2563eb !important; /* primary blue */
+}
+
+/* Active navigation links styling in light mode */
+.light header nav {
+  background-color: rgba(241, 245, 249, 0.8) !important;
+  border: 1px solid #cbd5e1 !important;
+}
+
+.light header nav a {
+  color: #64748b !important;
+}
+
+.light header nav a.text-white {
+  color: #0f172a !important;
+  font-weight: 700 !important;
+}
+
+.light header nav a:hover {
+  color: #2563eb !important;
+}
+
+/* Resume and theme toggle buttons inside header in light mode */
+.light header #theme-toggle-btn {
+  border: 1px solid #cbd5e1 !important;
+  background-color: #ffffff !important;
+  color: #f59e0b !important; /* amber sun icon color */
+}
+
+.light header #theme-toggle-btn:hover {
+  background-color: #f8fafc !important;
+}
+
+.light header .resume-btn {
+  background-image: linear-gradient(to right, #2563eb, #06b6d4) !important;
+  color: #ffffff !important;
+  border: none !important;
+}
+
+.light header .resume-btn:hover {
+  background-image: linear-gradient(to right, #1d4ed8, #0891b2) !important;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25) !important;
+}
+
+/* Ensure containers, panels, and glass cards are styled with elegant light borders and soft shadows */
+.light .glass-panel,
+.light .glass-card,
+.light div[class*="bg-slate-900"],
+.light div[class*="bg-[#030712]"],
+.light div[class*="bg-slate-950"],
+.light div[class*="bg-slate-800/"],
+.light div[class*="bg-[#030712]/"],
+.light div[class*="bg-slate-900/"],
+.light section div[class*="bg-"] {
+  background-color: #ffffff !important;
+  background-image: none !important;
+  border: 1px solid #e2e8f0 !important; /* light slate-200 border */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Timeline components, timelines line and experiences */
+.light div[class*="border-slate-800"],
+.light div[class*="border-slate-700"] {
+  border-color: #cbd5e1 !important; /* slate-300 lines */
+}
+
+.light .before\:bg-slate-800::before {
+  background-color: #cbd5e1 !important;
+}
+
+/* Tags and pill badges in light mode */
+.light span[class*="bg-slate-800"],
+.light div[class*="bg-slate-800"],
+.light .bg-slate-900\/50,
+.light .bg-slate-800\/50 {
+  background-color: #f1f5f9 !important;
+  color: #334155 !important;
+  border: 1px solid #e2e8f0 !important;
+}
+
+/* Remove glow blur backgrounds (excluding backdrop-blur elements like the navbar) */
+.light .glow-circle,
+.light [class*="blur-"]:not([class*="backdrop-blur"]),
+.light div[class*="bg-blue-500/10"],
+.light div[class*="bg-cyan-500/10"],
+.light div[class*="from-blue-500/"],
+.light div[class*="to-transparent"] {
+  display: none !important;
+}
+
+/* Form elements styling in light mode */
+.light input,
+.light textarea,
+.light select {
+  background-color: #ffffff !important;
+  border: 1px solid #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+.light input:focus,
+.light textarea:focus,
+.light select:focus {
+  border-color: #2563eb !important;
+  outline: 2px solid rgba(37, 99, 235, 0.15) !important;
+}
+
+.light input::placeholder,
+.light textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Adjust gradients to make them legible and modern against light backgrounds */
+.light [class*="bg-gradient-to-"] {
+  background-image: linear-gradient(to right, #1d4ed8, #0891b2) !important;
+  color: #ffffff !important;
+  border: none !important;
+}
+
+.light [class*="bg-clip-text"] {
+  background-image: linear-gradient(to right, #1d4ed8, #0891b2) !important;
+  background-clip: text !important;
+  -webkit-background-clip: text !important;
+  color: transparent !important;
+}
+
+/* Ensure icons display perfectly in light mode */
+.light svg {
+  stroke: currentColor !important;
+}
+
